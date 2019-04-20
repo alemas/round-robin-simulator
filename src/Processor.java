@@ -13,4 +13,13 @@ public class Processor {
 		this.processes = processes;
 	}
 	
+	@Override
+	public String toString() {
+		String r = "Processes: " + this.processes.size() + "\nTimeSlice: " + this.timeSlice;
+		for (int i = 0; i < this.processes.size(); i++) {
+			r += "\n\nProcess " + i + ":\n" + this.processes.get(i).toString();
+		}
+		return r;
+	}
+	
 }
