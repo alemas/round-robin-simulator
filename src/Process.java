@@ -11,21 +11,50 @@ public class Process {
 	// Tempo total para a execução desse processo
 	private int executionTime = 0;
 	
+	// Tempo que demora uma operação de I/O
+	private int ioDuration;
+	
 	// Tempo restante para terminar a execução
 	int remainingExecutionTime;
 	
-	// Tempo restando da fatia atual de tempo
+	// Tempo restante da fatia atual de tempo
 	int remainingSliceTime = 0;
 	
-	// Momentos de chamada de I/O
+	// Tempo restante para iniciar a próxima operação de I/O
+	int timeToNextIO = -1;
+	
+	// Tempo restante para a operação de I/O atual
+	int remainingIOTime = 0;
+	
+	// Momentos de chamada de operações I/O
 	ArrayList<Integer> ioTimes;
 	
-	public Process(int id, int arrivalTime, int executionTime, ArrayList<Integer> ioTimes) {
+	public Process(int id, int arrivalTime, int executionTime, ArrayList<Integer> ioTimes, int ioDuration) {
 		this.id = id;
 		this.arrivalTime = arrivalTime;
 		this.executionTime = executionTime;
 		this.remainingExecutionTime = this.executionTime;
 		this.ioTimes = ioTimes;
+		this.ioDuration = ioDuration;
+		this.prepareNextIO();
+	}
+
+	// Prepara a próxima chamada de I/O
+	public void prepareNextIO() {
+		if (!ioTimes.isEmpty()) {
+			this.timeToNextIO = ioTimes.get(0);
+			ioTimes.remove(0);
+			this.remainingIOTime = this.ioDuration;
+		} else {
+			// Caso não hajam mais chamadas de I/O pela frente, o tempo restante para a
+			// próxima chamada passa a ser -1
+			this.timeToNextIO = -1;
+		}
+	}
+	
+	// Indica se haverá outra chamamda de I/O no futuro
+	public boolean hasUpcomingIO() {
+		return !(this.timeToNextIO == -1);
 	}
 	
 	public int getId() {
