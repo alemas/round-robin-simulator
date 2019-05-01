@@ -33,7 +33,7 @@ public class FileReader {
 						 ioTimes.add(Integer.parseInt(stringValues[i]));
 					}
 					
-					processes.add(new Process(arrivalTime, executionTime, ioTimes));
+					processes.add(new Process(lineIndex-2, arrivalTime, executionTime, ioTimes));
 				}
 				
 				lineIndex++;
