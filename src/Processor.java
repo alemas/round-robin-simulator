@@ -57,6 +57,7 @@ public class Processor {
 			// Adiciona os processos que chegaram no momento atual à fila Ready
 			readyQueue.addAll(this.getUpcomingProcesses(currentTime));
 			
+			// Caso exista um processo rodando
 			if (this.currentProcess != null) {
 				
 				// Faz a execuçáo de 1 unidade de tempo do processo
@@ -83,12 +84,12 @@ public class Processor {
 				}
 			}
 			
-			// Para cada processo que está em IO, diminui uma unidade da operação
+			// Para cada processo que está em I/O, diminui uma unidade da operação
 				for (int i = 0; i < blockedQueue.size(); i++) {
 					Process p = blockedQueue.get(i);
 					p.remainingIOTime--;
 							
-					// Se o tempo de IO terminou, o processo volta para a fila Ready e
+					// Se o tempo da operação de I/O terminou, o processo volta para a fila Ready e
 					// já deixa preparada a próxima chamada de I/O (caso houver) 
 					if (p.remainingIOTime == 0) {
 					blockedQueue.remove(i);
@@ -98,20 +99,22 @@ public class Processor {
 				}
 			}
 
-			// Caso não haja um processo rodando e existam processos na fila Ready, uma execução é iniciada
-			if (this.currentProcess == null && !readyQueue.isEmpty()) {
+			// Caso não haja um processo rodando e existam processos na fila Ready ou Blocked, uma
+			// troca de contexto é iniciada junto com uma posterior execução
+			if (this.currentProcess == null && (!readyQueue.isEmpty()) || !blockedQueue.isEmpty()) {
 				if (contextChange) {
-					this.setCurrentProcess(readyQueue.get(0));
-					readyQueue.remove(0);
+					if (!readyQueue.isEmpty()) {
+						this.setCurrentProcess(readyQueue.get(0));
+						readyQueue.remove(0);
+					}
 					contextChange = false;
 				} else {
 					contextChange = true;
 				}
 			}
 
-			// Escreve no gráfico de resultado
+			// Escreve no gráfico de resultado o que aconteceu nesse ciclo
 			if (contextChange) {
-//				contextChange = false;
 				resultGraph += "C";
 			} else {
 				if (this.currentProcess == null) {
@@ -122,9 +125,9 @@ public class Processor {
 			}
 			
 			currentTime++;
-			System.out.println(resultGraph);
 		}
-
+		
+		System.out.println(resultGraph);
 	}
 
 	// Método que verifica se existem processos chegando no tempo especificado
