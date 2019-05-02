@@ -1,4 +1,13 @@
-
+/* 	Autores: Mateus Reckziegel e Fabricio Pujol
+*	Data: 29/04/19
+*	
+*	Classe responsável por representar a abstração de um processador
+*	com escalonador Round Robin sem prioridade. Cada processo recebe uma fatia de tempo
+*	para ocupar o processador e fazer suas operações. Eventos de I/O podem ocorrer, fazendo com
+*	com que processos vão para fila Blocked. No momento que a fatia de tempo termina, o processo
+*	é mandado para o fim da fila Ready e o próximo processo começa a executar. Trocas de contexto estão presentes
+*	e demoram 1 ciclo de processador.
+*/
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +20,6 @@ public class Processor {
 
 	// Fatia de tempo de execução que cada processo tem por vez
 	private int timeSlice;
-
-	// Tempo que dura uma operação de I/O
-	private int ioTime;
 
 	// Processo executando atualmente
 	Process currentProcess;

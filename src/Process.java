@@ -1,3 +1,11 @@
+/* 	Autores: Mateus Reckziegel e Fabricio Pujol
+*	Data: 09/04/19
+*	
+*	Classe responsável por representar a abstração de um processo 
+*	junto com todos atributos necessário para executar no
+*	processador
+*/
+
 import java.util.ArrayList;
 
 public class Process {

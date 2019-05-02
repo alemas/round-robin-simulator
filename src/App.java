@@ -1,3 +1,9 @@
+/* 	Autores: Mateus Reckziegel e Fabricio Pujol
+*	Data: 09/04/19
+*	
+*	Classe responsável pela execução do algoritmo
+*/
+
 
 public class App {
 

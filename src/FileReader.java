@@ -1,3 +1,10 @@
+/* 	Autores: Mateus Reckziegel e Fabricio Pujol
+*	Data: 09/04/19
+*	
+*	Classe responsável por ler o arquivo texto de entrada e retornar
+*	um objeto da classe "Processor"
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
